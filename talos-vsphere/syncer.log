@@ -1,0 +1,7 @@
+{"level":"info","time":"2024-01-11T16:08:46.485700659Z","caller":"logger/logger.go:41","msg":"Setting default log level to :\"PRODUCTION\""}
+{"level":"info","time":"2024-01-11T16:08:46.486368224Z","caller":"syncer/main.go:86","msg":"Version : v3.0.0","TraceId":"49af65af-c088-4f08-83d8-10c85875a5ab"}
+{"level":"info","time":"2024-01-11T16:08:46.486554142Z","caller":"syncer/main.go:103","msg":"Starting container with operation mode: METADATA_SYNC","TraceId":"49af65af-c088-4f08-83d8-10c85875a5ab"}
+{"level":"info","time":"2024-01-11T16:08:46.4866324Z","caller":"kubernetes/kubernetes.go:86","msg":"k8s client using in-cluster config","TraceId":"49af65af-c088-4f08-83d8-10c85875a5ab"}
+{"level":"info","time":"2024-01-11T16:08:46.487163036Z","caller":"kubernetes/kubernetes.go:395","msg":"Setting client QPS to 100.000000 and Burst to 100.","TraceId":"49af65af-c088-4f08-83d8-10c85875a5ab"}
+{"level":"info","time":"2024-01-11T16:08:46.488797155Z","caller":"syncer/main.go:125","msg":"Starting the http server to expose Prometheus metrics..","TraceId":"49af65af-c088-4f08-83d8-10c85875a5ab"}
+I0111 16:08:46.489848       1 leaderelection.go:248] attempting to acquire leader lease vmware-system-csi/vsphere-syncer...

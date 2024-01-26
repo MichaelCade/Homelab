@@ -17,7 +17,7 @@ machine:
       - interface: eno1 # The interface name 
         dhcp: true
         vip:
-          ip: 192.168.169.203 # Specifies the IP address to be used.
+          ip: 192.168.169.210 # Specifies the IP address to be used.
     install:
         disk: /dev/sda # The disk used for installations.
         image: ghcr.io/siderolabs/installer:v1.6.1 # Allows for supplying the image used to perform the installation.
@@ -35,7 +35,7 @@ cluster:
     id: YFr40R8A500AOkX4eI-OQJmiY-XevcuLRfNK-7tOsTM= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
     secret: 0LEwWvc7I13+raZ/upBqtGXsiyvpcn/cWSeCEMCP3l4= # Shared secret of cluster (base64 encoded random 32 bytes).
     controlPlane:
-        endpoint: https://192.168.169.203:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+        endpoint: https://192.168.169.210:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
     clusterName: talos-metal # Configures the cluster's name.
     network:
         dnsDomain: cluster.local # The domain used by Kubernetes DNS.
@@ -56,7 +56,7 @@ cluster:
     apiServer:
         image: registry.k8s.io/kube-apiserver:v1.27.7 # The container image used in the API server manifest.
         certSANs:
-            - 192.168.169.203
+            - 192.168.169.210
         disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
         admissionControl:
             - name: PodSecurity # Name is the name of the admission controller.

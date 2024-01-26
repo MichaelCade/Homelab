@@ -117,7 +117,7 @@ Using 'kubectl apply -f' on the files listed below to deploy
 'pvc-nfs.yaml' = an example PVC that should be dynamically created on the NFS device 
 
 
-
+Reference - https://github.com/ContainerCraft/Kargo/tree/main/pathfinder#5-apply-talos-cluster-config
 
 
 

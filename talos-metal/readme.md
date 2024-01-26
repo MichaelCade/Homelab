@@ -102,4 +102,23 @@ mv ~/.kube/config_tmp ~/.kube/config
 kubectl config get-contexts
 ```
 
+## NFS StorageClass 
+
+For this we are connecting to an NFS Shared Storage device I have on my network, it is an old NETGEAR 716 ReadyNAS. 
+
+We are using the (CSI-Driver-NFS)[https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/README.md]
+
+Using 'kubectl apply -f' on the files listed below to deploy 
+
+'sc-nfs.yaml' = storageclass pointing to the NFS device 
+
+'snapshotclass-nfs.yaml' = volumesnapshotclass with Kasten k10 annotation, will cover this later. 
+
+'pvc-nfs.yaml' = an example PVC that should be dynamically created on the NFS device 
+
+
+
+
+
+
 

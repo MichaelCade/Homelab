@@ -16,7 +16,14 @@ machine:
         image: ghcr.io/siderolabs/kubelet:v1.27.7 # The `image` field is an optional reference to an alternative kubelet image.
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
+        clusterDNS:
+        - 8.8.8.8
+        - 1.1.1.1
+        - 192.168.1.1
     network:
+     hostname: talos-node5
+     nameservers:
+       - 192.168.169.1
      interfaces:
       - interface: br0
         mtu: 1500
@@ -30,7 +37,10 @@ machine:
           stp:
             enabled: true
           interfaces:
-          - eno1
+              - eno1
+    time:
+      servers:
+        - time.cloudflare.com
     install:
         disk: /dev/sda # The disk used for installations.
         image: ghcr.io/siderolabs/installer:v1.6.1 # Allows for supplying the image used to perform the installation.

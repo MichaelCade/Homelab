@@ -1,8 +1,6 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  annotation: 
-    storageclass.kubernetes.io/is-default-class: "true"
   name: nfs-csi
 provisioner: nfs.csi.k8s.io
 parameters:
@@ -11,6 +9,4 @@ parameters:
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
-- hard
-- vers=3
-- nolock
+- nfsvers=3

@@ -1,0 +1,73 @@
+version: v1alpha1 # Indicates the schema used to decode the contents.
+debug: false # Enable verbose logging to the console.
+persist: true
+machine:
+    type: worker # Defines the role of the machine within the cluster.
+    token: fw8mgb.hylp6c3z08esiw2e # The `token` is used by a machine to join the PKI of the cluster.
+    ca:
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQekNCOHFBREFnRUNBaEVBL2wvTVlSRnA5Tk12NVNwaHM4eUhLREFGQmdNclpYQXdFREVPTUF3R0ExVUUKQ2hNRmRHRnNiM013SGhjTk1qUXdNVEl4TVRVME9EVTBXaGNOTXpRd01URTRNVFUwT0RVMFdqQVFNUTR3REFZRApWUVFLRXdWMFlXeHZjekFxTUFVR0F5dGxjQU1oQU5kY2l3TE1TSDNGVmhBaVNxdE9TSWF1Rzl1d1oxVnE1bE44Cktzc2VXSXpFbzJFd1h6QU9CZ05WSFE4QkFmOEVCQU1DQW9Rd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUcKQ0NzR0FRVUZCd01DTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRkZWTW5EMUw5MkREME0wMQo1MkM4SlRyY3dOdE1NQVVHQXl0bGNBTkJBTmg2NitOcnZRbCtzcTQxakl4eGJ0TlVGeFVwNDVSamVCUjBwQkJICk1UNGgwWWhSR2Q4NXN0aWU3cUFUeE1ZT3RGN2xOQXk5V3NUYWZUWDlreSs1elEwPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        key: ""
+    certSANs:
+    - 192.168.169.210
+    - 192.168.169.211
+    - 192.168.169.212
+    - 192.168.169.213
+    kubelet:
+        image: ghcr.io/siderolabs/kubelet:v1.27.7 # The `image` field is an optional reference to an alternative kubelet image.
+        defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
+        disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
+    network:
+     interfaces:
+      - interface: br0
+        mtu: 1500
+        addresses:
+        - 192.168.169.214/24
+        routes: 
+        - network: 0.0.0.0/0
+          gateway: 192.168.169.1 
+          metric: 1024
+        bridge: 
+          stp:
+            enabled: true
+          interfaces:
+          - eno1
+    install:
+        disk: /dev/sda # The disk used for installations.
+        image: ghcr.io/siderolabs/installer:v1.6.1 # Allows for supplying the image used to perform the installation.
+        wipe: false # Indicates if the installation disk should be wiped at installation time.
+    registries: {}
+    features:
+        rbac: true # Enable role-based access control (RBAC).
+        stableHostname: true # Enable stable default hostname.
+        apidCheckExtKeyUsage: true # Enable checks for extended key usage of client certificates in apid.
+        diskQuotaSupport: true # Enable XFS project quota support for EPHEMERAL partition and user disks.
+        # KubePrism - local proxy/load balancer on defined port that will distribute
+        kubePrism:
+            enabled: true # Enable KubePrism support - will start local load balacing proxy.
+            port: 7445 # KubePrism port.
+cluster:
+    id: YFr40R8A500AOkX4eI-OQJmiY-XevcuLRfNK-7tOsTM= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
+    secret: 0LEwWvc7I13+raZ/upBqtGXsiyvpcn/cWSeCEMCP3l4= # Shared secret of cluster (base64 encoded random 32 bytes).
+    # Provides control plane specific configuration options.
+    controlPlane:
+        endpoint: https://192.168.169.210:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+    # Provides cluster specific network configuration options.
+    network:
+        dnsDomain: cluster.local # The domain used by Kubernetes DNS.
+        # The pod subnet CIDR.
+        podSubnets:
+            - 10.244.0.0/16
+        # The service subnet CIDR.
+        serviceSubnets:
+            - 10.96.0.0/12
+    token: rnt7yo.a3x50tsf2s54lx0b # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
+    ca:
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpakNDQVMrZ0F3SUJBZ0lRUUppMHJ5dVgvN3lIaW01TFZ5aXpVekFLQmdncWhrak9QUVFEQWpBVk1STXcKRVFZRFZRUUtFd3ByZFdKbGNtNWxkR1Z6TUI0WERUSTBNREV5TVRFMU5EZzFORm9YRFRNME1ERXhPREUxTkRnMQpORm93RlRFVE1CRUdBMVVFQ2hNS2EzVmlaWEp1WlhSbGN6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VICkEwSUFCRGRXS3dMWHR6SW93NGp4RlZyODEyTmhDN0xFZWMxSHdZWmNhMGdhV0M3eVdoUGN0b3FrOWRvQkdKNE8KT3duQkwzQU5YZzZsNjFjRXd2aGc2NC9sMklPallUQmZNQTRHQTFVZER3RUIvd1FFQXdJQ2hEQWRCZ05WSFNVRQpGakFVQmdnckJnRUZCUWNEQVFZSUt3WUJCUVVIQXdJd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFCkZnUVVKa250Y2hQbHE0b3lRa2lKVjd6MHNEcUloQjR3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQU5MbG8zZWYKT0tsL2N5OUhFMFVRTXNGRU9mcEZIUnZTdWFLRnN4WEt1enZVQWlFQXV4VmpWMENSYlkxaHZibUtxWFVDbElleAo1Ni9IRFpRVmxLaUJNRmdLWTVZPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        key: ""
+    discovery:
+        enabled: true # Enable the cluster membership discovery feature.
+        registries:
+            kubernetes:
+                disabled: true # Disable Kubernetes discovery registry.
+            service: {}
+    #         	name: ci

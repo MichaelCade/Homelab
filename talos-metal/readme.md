@@ -2,7 +2,7 @@
 
 This walkthrough is used in my home lab environment which consists of 
 
-3 x Dell Optiplex 7060 
+5 x Dell Optiplex 7060 
 i5-8500T (6 Cores, 6 threads) 
 16/32GB RAM 
 256GB SSD 
@@ -14,19 +14,17 @@ Dell X1026 - 24 Port Switch
 
 There are some current upgrade plans 
 
-- Add an additional x 2 Dell Optixplex 7060s 
 - Upgrade all nodes to 32GB RAM 
 
 ## Current State / Update 
 
-We have a 3 node Control Plane/Worker node cluster running Talos Linux with configuration file in this folder. This Readme is so that I can remember how to start from scratch and help anyone else that stumbles across said readme to do the same in their homelab environment. 
+We have a 5 node (3 x Control Plane)(2 x Worker node) cluster running Talos Linux with configuration file in this folder. This Readme is so that I can remember how to start from scratch and help anyone else that stumbles across said readme to do the same in their homelab environment. 
 
-The idea is to have 3-5 node cluster with the OS being installed on the SSD drives, the nvme drives will be used in a CEPH cluster later on down the line. 
+A 5 node cluster with the OS being installed on the SSD drives, the nvme drives will be used in a CEPH cluster later on down the line. 
 
-I also have a shared NAS device which will be used by the cluster with the (CSI-Driver-NFS)[https://github.com/kubernetes-csi/csi-driver-nfs?tab=readme-ov-file] When I figure out the mount options for NFS3. 
+I also have a shared NAS device which will be used by the cluster with the (CSI-Driver-NFS)[https://github.com/kubernetes-csi/csi-driver-nfs?tab=readme-ov-file] Details and process shared below.
 
 To Do list 
-- NFS StorageClass 
 - CEPH Cluster 
 
 ## Getting Started 
@@ -45,33 +43,56 @@ Next up we need to create some config files, you will see these steps documented
 talosctl gen config --kubernetes-version=1.27.7 talos-metal https://192.168.169.210:6443
 ```
 
-This will create 3 files, controlplane.yaml, worker.yaml and talosconfig. These files can also be found in the folder here. 
+This will create 3 files, controlplane.yaml, worker.yaml and talosconfig. These files can also be found in the folder here. I have since modified these configurations so that I create a bridge network for each node you will see this below. 
+
+## Validate Configuration 
+
+```
+talosctl validate --config talos-node1-controlplane.yaml --mode metal
+talosctl validate --config talos-node2-controlplane.yaml --mode metal
+talosctl validate --config talos-node3-controlplane.yaml --mode metal
+talosctl validate --config talos-node4-worker.yaml --mode metal
+talosctl validate --config talos-node5-worker.yaml --mode metal
+
+```
 
 ## Apply the Config 
 
 Now that we have our config files and we have our physical nodes ready with a static IP we can now apply said config to our nodes. 
 
-*Note - I have modified the controlplane.yaml wiht a number of additional configurations required for my setup, one of which is the ability to run workloads on our control plane nodes*
+*Note - I have modified the controlplane.yaml with a number of additional configurations required for my setup, one of which is the ability to run workloads on our control plane nodes*
 
 ```
 # Apply the cluster configuration to each node
 talosctl apply-config \
     --nodes 192.168.169.211 \
     --endpoints 192.168.169.211 \
-    --file controlplane.yaml \
-    --insecure
+    --file talos-node1-controlplane.yaml \
+    --insecure 
 
 talosctl apply-config \
     --nodes 192.168.169.212 \
     --endpoints 192.168.169.212 \
-    --file controlplane.yaml \
-    --insecure
+    --file talos-node2-controlplane.yaml \
+    --insecure 
 
 talosctl apply-config \
     --nodes 192.168.169.213 \
     --endpoints 192.168.169.213 \
-    --file controlplane.yaml \
-    --insecure
+    --file talos-node3-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.214 \
+    --endpoints 192.168.169.214 \
+    --file talos-node4-worker.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.215 \
+    --endpoints 192.168.169.215 \
+    --file talos-node5-worker.yaml \
+    --insecure 
 ```
 
 On the console of your nodes you will see some activity at this stage, it is important that until the reboot phase takes place and the state is ready you cannot move to the next step. 
@@ -103,22 +124,45 @@ kubectl config get-contexts
 ```
 
 ## NFS StorageClass 
+I have an NFS Shared storage device on my network that can be used above and beyond the local fast CEPH cluster. 
 
-For this we are connecting to an NFS Shared Storage device I have on my network, it is an old NETGEAR 716 ReadyNAS. 
+```
+helm repo add csi-driver-nfs https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs --namespace kube-system --version v4.6.0 --set externalSnapshotter.enabled=true --set controller.runOnControlPlane=true --set controller.replicas=2
+```
 
-We are using the (CSI-Driver-NFS)[https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/README.md]
+StorageClass 
 
-Using 'kubectl apply -f' on the files listed below to deploy 
+`kubectl apply -f sc-nfs.yml` 
 
-'sc-nfs.yaml' = storageclass pointing to the NFS device 
+Test with PVC 
 
-'snapshotclass-nfs.yaml' = volumesnapshotclass with Kasten k10 annotation, will cover this later. 
-
-'pvc-nfs.yaml' = an example PVC that should be dynamically created on the NFS device 
-
-
-Reference - https://github.com/ContainerCraft/Kargo/tree/main/pathfinder#5-apply-talos-cluster-config
-
+`kubectl apply -f pvc-nfs.yml`
 
 
+## Reset 
+
+talosctl reset --debug \
+    --nodes 192.168.169.211 \
+    --endpoints 192.168.169.211 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --reboot
+
+talosctl reset --debug \
+    --nodes 192.168.169.212 \
+    --endpoints 192.168.169.212 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --reboot
+
+talosctl reset --debug \
+    --nodes 192.168.169.213 \
+    --endpoints 192.168.169.213 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --reboot
 

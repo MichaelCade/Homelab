@@ -25,21 +25,21 @@ machine:
      nameservers:
        - 192.168.169.1
      interfaces:
-      - interface: br0
-        mtu: 1500
-        addresses:
-        - 192.168.169.211/24
-        routes: 
-        - network: 0.0.0.0/0
-          gateway: 192.168.169.1 
-          metric: 1024
-        bridge: 
-          stp:
-            enabled: true
-          interfaces:
-              - eno1
-        vip:
-          ip: 192.168.169.210 # Specifies the IP address to be used.
+     - interface: br0
+       mtu: 1500
+       addresses:
+       - 192.168.169.211/24
+       routes: 
+       - network: 0.0.0.0/0
+         gateway: 192.168.169.1 
+         metric: 1024
+       bridge: 
+         stp:
+           enabled: false
+         interfaces:
+         - eno1
+       vip:
+         ip: 192.168.169.210 # Specifies the IP address to be used.
     time:
       servers:
         - time.cloudflare.com 

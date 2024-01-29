@@ -135,6 +135,12 @@ StorageClass
 
 `kubectl apply -f sc-nfs.yml` 
 
+
+SnapshotClass 
+
+`kubectl apply -f snapshotclass-nfs.yaml`
+
+
 Test with PVC 
 
 `kubectl apply -f pvc-nfs.yml`

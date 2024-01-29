@@ -12,7 +12,7 @@ export GOVC_URL='https://192.168.169.181'
 export GOVC_DATASTORE='NETGEAR716'
 
 CLUSTER_NAME=${CLUSTER_NAME:=vmware-test}
-TALOS_VERSION=v1.1.6
+TALOS_VERSION=v1.6.3
 OVA_PATH=${OVA_PATH:="https://github.com/siderolabs/talos/releases/download/${TALOS_VERSION}/vmware-amd64.ova"}
 
 CONTROL_PLANE_COUNT=${CONTROL_PLANE_COUNT:=3}

@@ -140,11 +140,10 @@ SnapshotClass
 
 `kubectl apply -f snapshotclass-nfs.yaml`
 
-Apply default storageclass 
 
-`kubectl patch storageclass nfs-csi -p '{"metadata": {"annotations":{"storageclass.ku
-bernetes.io/is-default-class":"true"}}}'`
+default storageclass 
 
+`kubectl patch storageclass nfs-csi -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
 
 Test with PVC 
 
@@ -159,6 +158,7 @@ talosctl reset --debug \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
 talosctl reset --debug \
@@ -167,6 +167,7 @@ talosctl reset --debug \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
 talosctl reset --debug \
@@ -175,5 +176,56 @@ talosctl reset --debug \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
+talosctl reset --debug \
+    --nodes 192.168.169.214 \
+    --endpoints 192.168.169.214 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --talosconfig talosconfig \
+    --reboot
+
+talosctl reset --debug \
+    --nodes 192.168.169.215 \
+    --endpoints 192.168.169.215 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --talosconfig talosconfig \
+    --reboot
+
+
+## After reset it removed the static IP so we are back to DHCP addresses 
+
+talosctl apply-config \
+    --nodes 192.168.169.98 \
+    --endpoints 192.168.169.98 \
+    --file talos-node1-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.74 \
+    --endpoints 192.168.169.74 \
+    --file talos-node2-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.56 \
+    --endpoints 192.168.169.56 \
+    --file talos-node3-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.36 \
+    --endpoints 192.168.169.36 \
+    --file talos-node4-worker.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.100 \
+    --endpoints 192.168.169.100 \
+    --file talos-node5-worker.yaml \
+    --insecure 

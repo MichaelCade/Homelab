@@ -140,6 +140,11 @@ SnapshotClass
 
 `kubectl apply -f snapshotclass-nfs.yaml`
 
+Apply default storageclass 
+
+`kubectl patch storageclass nfs-csi -p '{"metadata": {"annotations":{"storageclass.ku
+bernetes.io/is-default-class":"true"}}}'`
+
 
 Test with PVC 
 

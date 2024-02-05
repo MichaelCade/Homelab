@@ -10,7 +10,7 @@ i5-8500T (6 Cores, 6 threads)
 
 Dell X1026 - 24 Port Switch
 
-![](Picture1.png)
+![](Picture2.jpg)
 
 There are some current upgrade plans 
 
@@ -151,7 +151,9 @@ Test with PVC
 
 
 ## Reset 
+Every now and again there will be a configuration change or a requirement to reset the cluster back to fresh, this will refresh it back to a stage with no static IP addresses. 
 
+```
 talosctl reset --debug \
     --nodes 192.168.169.211 \
     --endpoints 192.168.169.211 \
@@ -196,10 +198,13 @@ talosctl reset --debug \
     --graceful=false \
     --talosconfig talosconfig \
     --reboot
+```
+
+## Rebuild after Reset 
+When the above reset is made it will remove those static IP addresses, we will need to run the below to apply configuration. Note that these IP addresses (DHCP) might change. 
 
 
-## After reset it removed the static IP so we are back to DHCP addresses 
-
+```
 talosctl apply-config \
     --nodes 192.168.169.98 \
     --endpoints 192.168.169.98 \
@@ -229,3 +234,4 @@ talosctl apply-config \
     --endpoints 192.168.169.100 \
     --file talos-node5-worker.yaml \
     --insecure 
+```

@@ -149,6 +149,23 @@ Test with PVC
 
 `kubectl apply -f pvc-nfs.yml`
 
+## Cilium 
+We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the kargo project dev container. 
+
+In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
+
+`kubectl apply -f cilium-ip-ipam.yaml`
+
+This allows me to use 192.168.169.190-199 as available addresses 
+
+## Rook Ceph 
+
+## Kasten K10 
+
+## Kubevirt 
+
+## Cert-Manager 
+
 
 ## Reset 
 Every now and again there will be a configuration change or a requirement to reset the cluster back to fresh, this will refresh it back to a stage with no static IP addresses. 

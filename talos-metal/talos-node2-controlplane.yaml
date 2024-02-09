@@ -16,14 +16,12 @@ machine:
         image: ghcr.io/siderolabs/kubelet:v1.27.7 # The `image` field is an optional reference to an alternative kubelet image.
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
-        clusterDNS:
-        - 8.8.8.8
-        - 1.1.1.1
-        - 192.168.1.1
     network:
      hostname: talos-node2
      nameservers:
        - 192.168.169.1
+       - 8.8.8.8
+       - 1.1.1.1       
      interfaces:
       - interface: br0
         mtu: 1500
@@ -35,7 +33,7 @@ machine:
           metric: 1024
         bridge: 
           stp:
-            enabled: true
+            enabled: false
           interfaces:
               - eno1
         vip:
@@ -68,6 +66,13 @@ cluster:
             - 10.244.0.0/16
         serviceSubnets:
             - 10.96.0.0/12
+        cni:
+          name: none
+    #proxy:
+    #image: registry.k8s.io/kube-proxy:v1.27.7 # The container image used in the kube-proxy manifest.
+    # Disabling kube-proxy to use Cilium in strict mode
+    proxy:
+      disabled: true
     token: rnt7yo.a3x50tsf2s54lx0b # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
     secretboxEncryptionSecret: mZIbnwreDILQgDoCTZLtwxNe6k02ZcoAVFBUPjQrWDw= # A key used for the [encryption of secret data at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/).
     ca:
@@ -110,8 +115,6 @@ cluster:
                 - level: Metadata
     controllerManager:
         image: registry.k8s.io/kube-controller-manager:v1.27.7 # The container image used in the controller manager manifest.
-    proxy:
-        image: registry.k8s.io/kube-proxy:v1.27.7 # The container image used in the kube-proxy manifest.
     scheduler:
         image: registry.k8s.io/kube-scheduler:v1.27.7 # The container image used in the scheduler manifest.
     discovery:

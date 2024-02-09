@@ -1,0 +1,71 @@
+Namespace option not provided, using default namespace
+[1;34mChecking for tools[0m
+[0;32m --> Found kubectl[0m
+[0;32m --> Found helm[0m
+[0;32m --> Found jq[0m
+[0;32m --> Found cat[0m
+[0;32m --> Found base64[0m
+[0;32m --> Found tr[0m
+[1;34mChecking if the Kasten Helm repo is present[0m
+[0;32m --> The Kasten Helm repo was found[0m
+[1;34mChecking for required Helm version (>= v3.9.0)[0m
+[0;32m --> No Tiller needed with Helm v3.13.3[0m
+[1;34mK10Primer image[0m
+[0;32m --> Using Image (gcr.io/kasten-images/k10tools:6.5.2) to run test[0m
+[1;34mChecking access to the Kubernetes context admin@talos-metal[0m
+[0;32m --> Able to access the default Kubernetes namespace[0m
+[1;34mK10 Kanister tools image[0m
+[0;32m --> Using Kanister tools image (gcr.io/kasten-images/k10tools:6.5.2) to run test[0m
+
+[1;34mRunning K10Primer Job in cluster with command[0m
+[0;32m     ./k10tools primer [0m
+serviceaccount/k10-primer created
+clusterrolebinding.rbac.authorization.k8s.io/k10-primer created
+job.batch/k10primer created
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod k10primer-tzxtw is in Pending phase
+Pod Ready!
+================================================================
+Kubernetes Version Check:
+  Valid kubernetes version (v1.27.7)  -  [1;32mOK[0m
+
+RBAC Check:
+  Kubernetes RBAC is enabled  -  [1;32mOK[0m
+
+Aggregated Layer Check:
+  The Kubernetes Aggregated Layer is enabled  -  [1;32mOK[0m
+
+CSI Capabilities Check:
+  Using CSI GroupVersion snapshot.storage.k8s.io/v1  -  [1;32mOK[0m
+
+Validating Provisioners: 
+nfs.csi.k8s.io:
+  Is a CSI Provisioner  -  [1;32mOK[0m
+  Storage Classes:
+    nfs-csi
+      Valid Storage Class  -  [1;32mOK[0m
+  Volume Snapshot Classes:
+    csi-nfs-snapclass
+      Has k10.kasten.io/is-snapshot-class annotation set to true  -  [1;32mOK[0m
+      Has deletionPolicy 'Delete'  -  [1;32mOK[0m
+
+W0129 22:23:08.046506      10 warnings.go:70] would violate PodSecurity "restricted:latest": allowPrivilegeEscalation != false (container "container" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "container" must set securityContext.capabilities.drop=["ALL"]), runAsNonRoot != true (pod or container "container" must set securityContext.runAsNonRoot=true), seccompProfile (pod or container "container" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+Validate Generic Volume Snapshot:
+  Pod created successfully  -  [1;32mOK[0m
+  GVS Backup command executed successfully  -  [1;32mOK[0m
+  Pod deleted successfully  -  [1;32mOK[0m
+================================================================
+serviceaccount "k10-primer" deleted
+clusterrolebinding.rbac.authorization.k8s.io "k10-primer" deleted
+job.batch "k10primer" deleted

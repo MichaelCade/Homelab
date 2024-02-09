@@ -16,14 +16,12 @@ machine:
         image: ghcr.io/siderolabs/kubelet:v1.27.7 # The `image` field is an optional reference to an alternative kubelet image.
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
-        clusterDNS:
-        - 8.8.8.8
-        - 1.1.1.1
-        - 192.168.1.1
     network:
      hostname: talos-node5
      nameservers:
        - 192.168.169.1
+       - 8.8.8.8
+       - 1.1.1.1
      interfaces:
       - interface: br0
         mtu: 1500
@@ -35,7 +33,7 @@ machine:
           metric: 1024
         bridge: 
           stp:
-            enabled: true
+            enabled: false
           interfaces:
               - eno1
     time:
@@ -70,6 +68,13 @@ cluster:
         # The service subnet CIDR.
         serviceSubnets:
             - 10.96.0.0/12
+        cni:
+          name: none
+    #proxy:
+    #image: registry.k8s.io/kube-proxy:v1.27.7 # The container image used in the kube-proxy manifest.
+    # Disabling kube-proxy to use Cilium in strict mode
+    proxy:
+      disabled: true
     token: rnt7yo.a3x50tsf2s54lx0b # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
     ca:
         crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpakNDQVMrZ0F3SUJBZ0lRUUppMHJ5dVgvN3lIaW01TFZ5aXpVekFLQmdncWhrak9QUVFEQWpBVk1STXcKRVFZRFZRUUtFd3ByZFdKbGNtNWxkR1Z6TUI0WERUSTBNREV5TVRFMU5EZzFORm9YRFRNME1ERXhPREUxTkRnMQpORm93RlRFVE1CRUdBMVVFQ2hNS2EzVmlaWEp1WlhSbGN6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VICkEwSUFCRGRXS3dMWHR6SW93NGp4RlZyODEyTmhDN0xFZWMxSHdZWmNhMGdhV0M3eVdoUGN0b3FrOWRvQkdKNE8KT3duQkwzQU5YZzZsNjFjRXd2aGc2NC9sMklPallUQmZNQTRHQTFVZER3RUIvd1FFQXdJQ2hEQWRCZ05WSFNVRQpGakFVQmdnckJnRUZCUWNEQVFZSUt3WUJCUVVIQXdJd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFCkZnUVVKa250Y2hQbHE0b3lRa2lKVjd6MHNEcUloQjR3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQU5MbG8zZWYKT0tsL2N5OUhFMFVRTXNGRU9mcEZIUnZTdWFLRnN4WEt1enZVQWlFQXV4VmpWMENSYlkxaHZibUtxWFVDbElleAo1Ni9IRFpRVmxLaUJNRmdLWTVZPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==

@@ -10,7 +10,7 @@ i5-8500T (6 Cores, 6 threads)
 
 Dell X1026 - 24 Port Switch
 
-![](Picture1.png)
+![](Picture2.jpg)
 
 There are some current upgrade plans 
 
@@ -135,19 +135,49 @@ StorageClass
 
 `kubectl apply -f sc-nfs.yml` 
 
+
+SnapshotClass 
+
+`kubectl apply -f snapshotclass-nfs.yaml`
+
+
+default storageclass 
+
+`kubectl patch storageclass nfs-csi -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
+
 Test with PVC 
 
 `kubectl apply -f pvc-nfs.yml`
 
+## Cilium 
+We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the kargo project dev container. 
+
+In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
+
+`kubectl apply -f cilium-ip-ipam.yaml`
+
+This allows me to use 192.168.169.190-199 as available addresses 
+
+## Rook Ceph 
+
+## Kasten K10 
+
+## Kubevirt 
+
+## Cert-Manager 
+
 
 ## Reset 
+Every now and again there will be a configuration change or a requirement to reset the cluster back to fresh, this will refresh it back to a stage with no static IP addresses. 
 
+```
 talosctl reset --debug \
     --nodes 192.168.169.211 \
     --endpoints 192.168.169.211 \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
 talosctl reset --debug \
@@ -156,6 +186,7 @@ talosctl reset --debug \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
 talosctl reset --debug \
@@ -164,5 +195,60 @@ talosctl reset --debug \
     --system-labels-to-wipe STATE \
     --system-labels-to-wipe EPHEMERAL \
     --graceful=false \
+    --talosconfig talosconfig \
     --reboot
 
+talosctl reset --debug \
+    --nodes 192.168.169.214 \
+    --endpoints 192.168.169.214 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --talosconfig talosconfig \
+    --reboot
+
+talosctl reset --debug \
+    --nodes 192.168.169.215 \
+    --endpoints 192.168.169.215 \
+    --system-labels-to-wipe STATE \
+    --system-labels-to-wipe EPHEMERAL \
+    --graceful=false \
+    --talosconfig talosconfig \
+    --reboot
+```
+
+## Rebuild after Reset 
+When the above reset is made it will remove those static IP addresses, we will need to run the below to apply configuration. Note that these IP addresses (DHCP) might change. 
+
+
+```
+talosctl apply-config \
+    --nodes 192.168.169.98 \
+    --endpoints 192.168.169.98 \
+    --file talos-node1-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.74 \
+    --endpoints 192.168.169.74 \
+    --file talos-node2-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.56 \
+    --endpoints 192.168.169.56 \
+    --file talos-node3-controlplane.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.36 \
+    --endpoints 192.168.169.36 \
+    --file talos-node4-worker.yaml \
+    --insecure 
+
+talosctl apply-config \
+    --nodes 192.168.169.100 \
+    --endpoints 192.168.169.100 \
+    --file talos-node5-worker.yaml \
+    --insecure 
+```

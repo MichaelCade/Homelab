@@ -10,9 +10,11 @@ export GOVC_PASSWORD='Passw0rd999!'
 export GOVC_INSECURE=true
 export GOVC_URL='https://192.168.169.181'
 export GOVC_DATASTORE='NETGEAR716'
+export CLUSTER_NAME='vZilla-Cluster'
 
+# If a cluster name is not defined then it will be vmware-test, I hard coded the cluster name for ease.
 CLUSTER_NAME=${CLUSTER_NAME:=vmware-test}
-TALOS_VERSION=v1.6.3
+TALOS_VERSION=v1.6.4
 OVA_PATH=${OVA_PATH:="https://github.com/siderolabs/talos/releases/download/${TALOS_VERSION}/vmware-amd64.ova"}
 
 CONTROL_PLANE_COUNT=${CONTROL_PLANE_COUNT:=3}
@@ -27,10 +29,39 @@ WORKER_MEM=${WORKER_MEM:=4096}
 WORKER_DISK=${WORKER_DISK:=10G}
 WORKER_MACHINE_CONFIG_PATH=${WORKER_MACHINE_CONFIG_PATH:="./worker.yaml"}
 
+#upload_ova () {
+#    ## Import desired Talos Linux OVA into a new content library
+#    govc library.create ${CLUSTER_NAME}
+#    govc library.import -n talos-${TALOS_VERSION} ${CLUSTER_NAME} ${OVA_PATH}
+#}
+
 upload_ova () {
-    ## Import desired Talos Linux OVA into a new content library
-    govc library.create ${CLUSTER_NAME}
-    govc library.import -n talos-${TALOS_VERSION} ${CLUSTER_NAME} ${OVA_PATH}
+    echo "Starting upload_ova function..."
+
+    # Check if the content library already exists
+    echo "Checking if content library ${CLUSTER_NAME} exists..."
+    govc library.ls | grep -q ${CLUSTER_NAME} && {
+        echo "Content library ${CLUSTER_NAME} already exists."
+    } || {
+        echo "Creating content library ${CLUSTER_NAME}..."
+        if govc library.create ${CLUSTER_NAME}; then
+            echo "Content library ${CLUSTER_NAME} created successfully."
+        else
+            echo "Failed to create content library ${CLUSTER_NAME}."
+            exit 1
+        fi
+    }
+
+    # Import desired Talos Linux OVA into the content library
+    echo "Importing Talos Linux OVA into content library ${CLUSTER_NAME}..."
+    if govc library.import -n talos-${TALOS_VERSION} ${CLUSTER_NAME} ${OVA_PATH}; then
+        echo "Talos Linux OVA imported successfully."
+    else
+        echo "Failed to import Talos Linux OVA."
+        exit 1
+    fi
+
+    echo "Finished upload_ova function."
 }
 
 create () {
@@ -101,6 +132,34 @@ delete_ova() {
     govc library.rm ${CLUSTER_NAME}
 }
 
+
+bootstrap() {
+# This function should be used when the create function has been used and now is time to create and bootstrap our cluster 
+# We first need to obtain the IP addresses from the created cluster 
+echo "Bootstrapping the Cluster..."
+
+govc vm.ip ${CLUSTER_NAME}-control-plane-1
+
+
+}
+
+#vmware_ready() {
+# This function will be used to install VMware Tools, VMware CPI and VMware CSI 
+# We will also then create a storageclass within the Kubernetes cluster 
+#}
+
 "$@"
-T="$(($(date +%s)-T))"
-echo "It took ${T} seconds!"
+
+# Calculate the elapsed time in seconds
+ELAPSED_TIME=$(( $(date +%s) - T ))
+
+# Check if the elapsed time is greater than 60 seconds
+if [ $ELAPSED_TIME -ge 60 ]; then
+    # If the elapsed time is greater than or equal to 60 seconds, convert it to minutes
+    ELAPSED_TIME=$(( ELAPSED_TIME / 60 ))
+    UNIT="minutes"
+else
+    UNIT="seconds"
+fi
+
+echo "It took ${ELAPSED_TIME} ${UNIT}!"

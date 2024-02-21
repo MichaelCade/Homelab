@@ -83,12 +83,14 @@ Check the Talos version and modify the cluster size if needed.
 
 3. Bootstrap the cluster.
 
+The node `-n` is going to come from either checking the vSphere terminal or 
+
 ```
 talosctl --talosconfig talosconfig bootstrap -e <IP> -n <IP>
 ```
 
 ## Kubeconfig Configuration
-Configure Kubeconfig for Talos cluster.
+Configure Kubeconfig for Talos cluster.  In my case here `192.168.169.202` is my IP 
 
 ```
 talosctl --talosconfig talosconfig config endpoint <IP>
@@ -104,7 +106,7 @@ kubectl --kubeconfig=kubeconfig get nodes
 ## VMtools Configuration
 Configure VMtools for Talos.
 ```
-talosctl -n <IP> config new vmtoolsd-secret.yaml --roles os:admin
+talosctl --talosconfig talosconfig -n 192.168.169.202 config new vmtoolsd-secret.yaml --roles os:admin
 
 kubectl --kubeconfig=kubeconfig -n kube-system create secret generic talos-vmtoolsd-config --from-file=talosconfig=./vmtoolsd-secret.yaml
 

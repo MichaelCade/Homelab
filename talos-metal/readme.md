@@ -164,10 +164,6 @@ We have removed the default flannel CNI from our control plane and worker yaml c
 
 `kubectl apply -f cilium/cilium-l2announcement.yaml`
 
-
-
-
-
 In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
 
 `kubectl apply -f cilium/cilium-ip-ipam.yaml `
@@ -255,6 +251,10 @@ Then to authenticate we need our default username `admin` and our password can b
 If you followed along to with Cilium then you might also now want to expose the ceph dashboard using IP PAM you can create this service for that 
 
 `kubectl apply -f rook-ceph/ceph-dashboard-LB.yaml`
+
+If you have done both NFS and Ceph then it is likely that you now have two default storageclasses this can be changed with the following command: This will remove the default annotation on the nfs-csi storageclass.  
+
+`kubectl patch storageclass nfs-csi  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'`
 
 ## Kasten K10 
 

@@ -29,6 +29,7 @@ To Do list (as of 28th Feb 2024)
 - Kasten K10 
 - Kubevirt 
 - Cert-Manager 
+- ArgoCD 
 
 The above list and order may need to change but for now this is part of the learning curve, the overall goal is to leverage Kargo (Project Listed Below) for the automation of this. 
 
@@ -157,6 +158,16 @@ Test with PVC
 ## Cilium 
 We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the (kargo project dev container)[https://github.com/ContainerCraft/Kargo]. 
 
+`helm repo add cilium https://helm.cilium.io/`
+
+`helm upgrade cilium cilium/cilium --namespace=kube-system -f cilium/cilium-values.yaml --version 1.14.7`
+
+`kubectl apply -f cilium/cilium-l2announcement.yaml`
+
+
+
+
+
 In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
 
 `kubectl apply -f cilium/cilium-ip-ipam.yaml `
@@ -240,6 +251,10 @@ Initial Authentication can be achieved with a port forward to the dashboard
 Then to authenticate we need our default username `admin` and our password can be obtained with: 
 
 `kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo`
+
+If you followed along to with Cilium then you might also now want to expose the ceph dashboard using IP PAM you can create this service for that 
+
+`kubectl apply -f rook-ceph/ceph-dashboard-LB.yaml`
 
 ## Kasten K10 
 

@@ -1,0 +1,294 @@
+level=info msg="  --agent-not-ready-taint-key='node.cilium.io/agent-not-ready'" subsys=cilium-operator-generic
+level=info msg="  --arping-refresh-period='30s'" subsys=cilium-operator-generic
+level=info msg="  --auto-create-cilium-pod-ip-pools=''" subsys=cilium-operator-generic
+level=info msg="  --auto-direct-node-routes='false'" subsys=cilium-operator-generic
+level=info msg="  --bgp-announce-lb-ip='false'" subsys=cilium-operator-generic
+level=info msg="  --bgp-config-path='/var/lib/cilium/bgp/config.yaml'" subsys=cilium-operator-generic
+level=info msg="  --bpf-lb-external-clusterip='false'" subsys=cilium-operator-generic
+level=info msg="  --bpf-lb-map-max='65536'" subsys=cilium-operator-generic
+level=info msg="  --bpf-lb-sock='false'" subsys=cilium-operator-generic
+level=info msg="  --bpf-map-dynamic-size-ratio='0.0025'" subsys=cilium-operator-generic
+level=info msg="  --bpf-policy-map-max='16384'" subsys=cilium-operator-generic
+level=info msg="  --bpf-root='/sys/fs/bpf'" subsys=cilium-operator-generic
+level=info msg="  --ces-max-ciliumendpoints-per-ces='100'" subsys=cilium-operator-generic
+level=info msg="  --ces-slice-mode='cesSliceModeIdentity'" subsys=cilium-operator-generic
+level=info msg="  --ces-write-qps-burst='20'" subsys=cilium-operator-generic
+level=info msg="  --ces-write-qps-limit='10'" subsys=cilium-operator-generic
+level=info msg="  --cgroup-root='/sys/fs/cgroup'" subsys=cilium-operator-generic
+level=info msg="  --cilium-endpoint-gc-interval='5m0s'" subsys=cilium-operator-generic
+level=info msg="  --cilium-pod-labels='k8s-app=cilium'" subsys=cilium-operator-generic
+level=info msg="  --cilium-pod-namespace=''" subsys=cilium-operator-generic
+level=info msg="  --cluster-id='0'" subsys=cilium-operator-generic
+level=info msg="  --cluster-name='talos-metal'" subsys=cilium-operator-generic
+level=info msg="  --cluster-pool-ipv4-cidr=''" subsys=cilium-operator-generic
+level=info msg="  --cluster-pool-ipv4-mask-size='24'" subsys=cilium-operator-generic
+level=info msg="  --cluster-pool-ipv6-cidr=''" subsys=cilium-operator-generic
+level=info msg="  --cluster-pool-ipv6-mask-size='112'" subsys=cilium-operator-generic
+level=info msg="  --cmdref=''" subsys=cilium-operator-generic
+level=info msg="  --cni-exclusive='true'" subsys=cilium-operator-generic
+level=info msg="  --cni-log-file='/var/run/cilium/cilium-cni.log'" subsys=cilium-operator-generic
+level=info msg="  --cnp-node-status-gc-interval='0s'" subsys=cilium-operator-generic
+level=info msg="  --cnp-status-cleanup-burst='20'" subsys=cilium-operator-generic
+level=info msg="  --cnp-status-cleanup-qps='10'" subsys=cilium-operator-generic
+level=info msg="  --cnp-status-update-interval='1s'" subsys=cilium-operator-generic
+level=info msg="  --config=''" subsys=cilium-operator-generic
+level=info msg="  --config-dir='/tmp/cilium/config-map'" subsys=cilium-operator-generic
+level=info msg="  --custom-cni-conf='false'" subsys=cilium-operator-generic
+level=info msg="  --debug='false'" subsys=cilium-operator-generic
+level=info msg="  --debug-verbose=''" subsys=cilium-operator-generic
+level=info msg="  --disable-cnp-status-updates='true'" subsys=cilium-operator-generic
+level=info msg="  --disable-endpoint-crd='false'" subsys=cilium-operator-generic
+level=info msg="  --egress-gateway-reconciliation-trigger-interval='1s'" subsys=cilium-operator-generic
+level=info msg="  --enable-auto-protect-node-port-range='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-bgp-control-plane='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-bpf-clock-probe='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-cilium-endpoint-slice='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-cilium-operator-server-access='*'" subsys=cilium-operator-generic
+level=info msg="  --enable-endpoint-health-checking='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-health-check-nodeport='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-health-checking='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-hubble='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv4='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv4-big-tcp='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv4-egress-gateway='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv4-masquerade='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv6='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv6-big-tcp='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-ipv6-masquerade='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s-api-discovery='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s-endpoint-slice='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s-event-handover='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s-networkpolicy='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-k8s-terminating-endpoint='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-l2-announcements='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-l2-neigh-discovery='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-l7-proxy='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-local-redirect-policy='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-metrics='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-policy='default'" subsys=cilium-operator-generic
+level=info msg="  --enable-remote-node-identity='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-sctp='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-srv6='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-svc-source-range-check='true'" subsys=cilium-operator-generic
+level=info msg="  --enable-vtep='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-well-known-identities='false'" subsys=cilium-operator-generic
+level=info msg="  --enable-xt-socket-fallback='true'" subsys=cilium-operator-generic
+level=info msg="  --external-envoy-proxy='false'" subsys=cilium-operator-generic
+level=info msg="  --gops-port='9891'" subsys=cilium-operator-generic
+level=info msg="  --hubble-disable-tls='false'" subsys=cilium-operator-generic
+level=info msg="  --hubble-listen-address=':4244'" subsys=cilium-operator-generic
+level=info msg="  --hubble-socket-path='/var/run/cilium/hubble.sock'" subsys=cilium-operator-generic
+level=info msg="  --hubble-tls-cert-file='/var/lib/cilium/tls/hubble/server.crt'" subsys=cilium-operator-generic
+level=info msg="  --hubble-tls-client-ca-files='/var/lib/cilium/tls/hubble/client-ca.crt'" subsys=cilium-operator-generic
+level=info msg="  --hubble-tls-key-file='/var/lib/cilium/tls/hubble/server.key'" subsys=cilium-operator-generic
+level=info msg="  --identity-allocation-mode='crd'" subsys=cilium-operator-generic
+level=info msg="  --identity-gc-interval='15m0s'" subsys=cilium-operator-generic
+level=info msg="  --identity-gc-rate-interval='1m0s'" subsys=cilium-operator-generic
+level=info msg="  --identity-gc-rate-limit='2500'" subsys=cilium-operator-generic
+level=info msg="  --identity-heartbeat-timeout='30m0s'" subsys=cilium-operator-generic
+level=info msg="  --ingress-lb-annotation-prefixes='service.beta.kubernetes.io,service.kubernetes.io,cloud.google.com'" subsys=cilium-operator-generic
+level=info msg="  --install-no-conntrack-iptables-rules='false'" subsys=cilium-operator-generic
+level=info msg="  --instance-tags-filter=''" subsys=cilium-operator-generic
+level=info msg="  --ipam='kubernetes'" subsys=cilium-operator-generic
+level=info msg="  --ipam-cilium-node-update-rate='15s'" subsys=cilium-operator-generic
+level=info msg="  --k8s-api-server=''" subsys=cilium-operator-generic
+level=info msg="  --k8s-client-burst='10'" subsys=cilium-operator-generic
+level=info msg="  --k8s-client-qps='5'" subsys=cilium-operator-generic
+level=info msg="  --k8s-heartbeat-timeout='30s'" subsys=cilium-operator-generic
+level=info msg="  --k8s-kubeconfig-path=''" subsys=cilium-operator-generic
+level=info msg="  --k8s-namespace='kube-system'" subsys=cilium-operator-generic
+level=info msg="  --k8s-service-proxy-name=''" subsys=cilium-operator-generic
+level=info msg="  --kube-proxy-replacement='strict'" subsys=cilium-operator-generic
+level=info msg="  --kube-proxy-replacement-healthz-bind-address=''" subsys=cilium-operator-generic
+level=info msg="  --kvstore=''" subsys=cilium-operator-generic
+level=info msg="  --kvstore-lease-ttl='15m0s'" subsys=cilium-operator-generic
+level=info msg="  --kvstore-opt=''" subsys=cilium-operator-generic
+level=info msg="  --leader-election-lease-duration='15s'" subsys=cilium-operator-generic
+level=info msg="  --leader-election-renew-deadline='10s'" subsys=cilium-operator-generic
+level=info msg="  --leader-election-retry-period='2s'" subsys=cilium-operator-generic
+level=info msg="  --limit-ipam-api-burst='20'" subsys=cilium-operator-generic
+level=info msg="  --limit-ipam-api-qps='4'" subsys=cilium-operator-generic
+level=info msg="  --log-driver=''" subsys=cilium-operator-generic
+level=info msg="  --log-opt=''" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-enabled='true'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-gc-interval='5m0s'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-mutual-enabled='false'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-queue-size='1024'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-rotated-identities-queue-size='1024'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-spiffe-trust-domain='spiffe.cilium'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-spire-agent-socket='/run/spire/sockets/agent/agent.sock'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-spire-server-address='spire-server.spire.svc:8081'" subsys=cilium-operator-generic
+level=info msg="  --mesh-auth-spire-server-connection-timeout='10s'" subsys=cilium-operator-generic
+level=info msg="  --monitor-aggregation='medium'" subsys=cilium-operator-generic
+level=info msg="  --monitor-aggregation-flags='all'" subsys=cilium-operator-generic
+level=info msg="  --monitor-aggregation-interval='5s'" subsys=cilium-operator-generic
+level=info msg="  --node-port-bind-protection='true'" subsys=cilium-operator-generic
+level=info msg="  --nodes-gc-interval='5m0s'" subsys=cilium-operator-generic
+level=info msg="  --operator-api-serve-addr='127.0.0.1:9234'" subsys=cilium-operator-generic
+level=info msg="  --operator-pprof='false'" subsys=cilium-operator-generic
+level=info msg="  --operator-pprof-address='localhost'" subsys=cilium-operator-generic
+level=info msg="  --operator-pprof-port='6061'" subsys=cilium-operator-generic
+level=info msg="  --operator-prometheus-serve-addr=':9963'" subsys=cilium-operator-generic
+level=info msg="  --parallel-alloc-workers='50'" subsys=cilium-operator-generic
+level=info msg="  --pod-restart-selector='k8s-app=kube-dns'" subsys=cilium-operator-generic
+level=info msg="  --preallocate-bpf-maps='false'" subsys=cilium-operator-generic
+level=info msg="  --procfs='/host/proc'" subsys=cilium-operator-generic
+level=info msg="  --proxy-connect-timeout='2'" subsys=cilium-operator-generic
+level=info msg="  --proxy-max-connection-duration-seconds='0'" subsys=cilium-operator-generic
+level=info msg="  --proxy-max-requests-per-connection='0'" subsys=cilium-operator-generic
+level=info msg="  --proxy-prometheus-port='9964'" subsys=cilium-operator-generic
+level=info msg="  --remove-cilium-node-taints='true'" subsys=cilium-operator-generic
+level=info msg="  --routing-mode='tunnel'" subsys=cilium-operator-generic
+level=info msg="  --set-cilium-is-up-condition='true'" subsys=cilium-operator-generic
+level=info msg="  --set-cilium-node-taints='true'" subsys=cilium-operator-generic
+level=info msg="  --sidecar-istio-proxy-image='cilium/istio_proxy'" subsys=cilium-operator-generic
+level=info msg="  --skip-cnp-status-startup-clean='false'" subsys=cilium-operator-generic
+level=info msg="  --skip-crd-creation='false'" subsys=cilium-operator-generic
+level=info msg="  --subnet-ids-filter=''" subsys=cilium-operator-generic
+level=info msg="  --subnet-tags-filter=''" subsys=cilium-operator-generic
+level=info msg="  --synchronize-k8s-nodes='true'" subsys=cilium-operator-generic
+level=info msg="  --synchronize-k8s-services='true'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-dns-reject-response-code='refused'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-enable-dns-compression='true'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-endpoint-max-ip-per-hostname='50'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-idle-connection-grace-period='0s'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-max-deferred-connection-deletes='10000'" subsys=cilium-operator-generic
+level=info msg="  --tofqdns-proxy-response-max-delay='100ms'" subsys=cilium-operator-generic
+level=info msg="  --tunnel-protocol='vxlan'" subsys=cilium-operator-generic
+level=info msg="  --unmanaged-pod-watcher-interval='15'" subsys=cilium-operator-generic
+level=info msg="  --version='false'" subsys=cilium-operator-generic
+level=info msg="  --vtep-cidr=''" subsys=cilium-operator-generic
+level=info msg="  --vtep-endpoint=''" subsys=cilium-operator-generic
+level=info msg="  --vtep-mac=''" subsys=cilium-operator-generic
+level=info msg="  --vtep-mask=''" subsys=cilium-operator-generic
+level=info msg="  --write-cni-conf-when-ready='/host/etc/cni/net.d/05-cilium.conflist'" subsys=cilium-operator-generic
+level=info msg="Cilium Operator 1.14.4 87dd2b64 2023-11-09T15:02:52-05:00 go version go1.20.11 linux/amd64" subsys=cilium-operator-generic
+level=info msg=Invoked duration="346.637µs" function="pprof.glob..func1 (cell.go:51)" subsys=hive
+level=info msg=Invoked duration="40.04µs" function="gops.registerGopsHooks (cell.go:39)" subsys=hive
+level=info msg=Invoked duration="470.766µs" function="cmd.registerOperatorHooks (root.go:156)" subsys=hive
+level=info msg=Invoked duration=8.611069ms function="api.glob..func1 (cell.go:32)" subsys=hive
+level=info msg=Invoked duration="106.875µs" function="apis.createCRDs (cell.go:63)" subsys=hive
+level=info msg=Invoked duration="125.682µs" function="lbipam.glob..func1 (cell.go:25)" subsys=hive
+level=info msg=Invoked duration="182.868µs" function="auth.registerIdentityWatcher (watcher.go:43)" subsys=hive
+level=info msg=Invoked duration="120.593µs" function="cmd.registerLegacyOnLeader (root.go:362)" subsys=hive
+level=info msg=Invoked duration="96.13µs" function="identitygc.registerGC (gc.go:82)" subsys=hive
+level=info msg=Starting subsys=hive
+level=info msg="Started gops server" address="127.0.0.1:9891" subsys=gops
+level=info msg="Start hook executed" duration="190.739µs" function="gops.registerGopsHooks.func1 (cell.go:44)" subsys=hive
+level=info msg="Establishing connection to apiserver" host="https://192.168.169.210:6443" subsys=k8s-client
+level=info msg="Connected to apiserver" subsys=k8s-client
+level=info msg="Start hook executed" duration=8.610252ms function="client.(*compositeClientset).onStart" subsys=hive
+level=info msg="Start hook executed" duration="4.168µs" function="cmd.registerOperatorHooks.func1 (root.go:159)" subsys=hive
+level=info msg="Waiting for leader election" subsys=cilium-operator-generic
+level=info msg="attempting to acquire leader lease kube-system/cilium-operator-resource-lock..." subsys=klog
+level=info msg="Start hook executed" duration=7.17332ms function="*api.server.Start" subsys=hive
+level=info msg="successfully acquired lease kube-system/cilium-operator-resource-lock" subsys=klog
+level=info msg="Leading the operator HA deployment" subsys=cilium-operator-generic
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumloadbalancerippools.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumexternalworkloads.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumnodeconfigs.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliuml2announcementpolicies.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumcidrgroups.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumidentities.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumpodippools.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumendpoints.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumnodes.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumclusterwidenetworkpolicies.cilium.io subsys=k8s
+level=info msg="CRD (CustomResourceDefinition) is installed and up-to-date" name=ciliumnetworkpolicies.cilium.io subsys=k8s
+level=info msg="Start hook executed" duration=727.054164ms function="apis.createCRDs.func1 (cell.go:65)" subsys=hive
+level=info msg="Start hook executed" duration="15.441µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s/apis/cilium.io/v2alpha1.CiliumLoadBalancerIPPool].Start" subsys=hive
+level=info msg="Start hook executed" duration="3.6µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s/slim/k8s/api/core/v1.Service].Start" subsys=hive
+level=info msg="Start hook executed" duration="13.468µs" function="*job.group.Start" subsys=hive
+level=info msg="Start hook executed" duration="13.493µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s/apis/cilium.io/v2.CiliumIdentity].Start" subsys=hive
+level=info msg="Start hook executed" duration="1.609µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s.Endpoints].Start" subsys=hive
+level=info msg="Start hook executed" duration="1.644µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s/apis/cilium.io/v2alpha1.CiliumPodIPPool].Start" subsys=hive
+level=info msg="Start hook executed" duration="1.667µs" function="*resource.resource[*github.com/cilium/cilium/pkg/k8s/slim/k8s/api/networking/v1.IngressClass].Start" subsys=hive
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="Initializing IPAM" mode=kubernetes subsys=cilium-operator-generic
+level=info msg="Managing Cilium Node Taints or Setting Cilium Is Up Condition for Kubernetes Nodes" k8sNamespace=kube-system label-selector="k8s-app=cilium" remove-cilium-node-taints=true set-cilium-is-up-condition=true set-cilium-node-taints=true subsys=cilium-operator-generic
+level=info msg="Starting to synchronize CiliumNode custom resources" subsys=cilium-operator-generic
+level=info msg="Starting to garbage collect stale CiliumNode custom resources" subsys=watchers
+level=info msg="Starting to garbage collect stale CiliumEndpoint custom resources" subsys=cilium-operator-generic
+level=info msg="Garbage collected status/nodes in Cilium Network Policies found=0, gc=0" subsys=cilium-operator-generic
+level=info msg="Garbage collected status/nodes in Cilium Clusterwide Network Policies found=0, gc=0" subsys=cilium-operator-generic
+level=info msg="Cilium pod scheduled but not running for node; setting taint" nodeName=talos-node2 subsys=watchers
+level=info msg="Cilium pod scheduled but not running for node; setting taint" nodeName=talos-node5 subsys=watchers
+level=info msg="CiliumNodes caches synced with Kubernetes" subsys=cilium-operator-generic
+level=info msg="Starting CNP derivative handler" subsys=cilium-operator-generic
+level=info msg="Starting CCNP derivative handler" subsys=cilium-operator-generic
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Initialization complete" subsys=cilium-operator-generic
+level=info msg="Start hook executed" duration=202.604288ms function="cmd.(*legacyOnLeader).onStart" subsys=hive
+level=info msg="Starting CRD identity garbage collector" interval=15m0s subsys=k8s-identities-gc
+level=info msg="Start hook executed" duration="119.381µs" function="identitygc.registerGC.func1 (gc.go:111)" subsys=hive
+level=info msg="Cilium pod running for node; marking accordingly" nodeName=talos-node3 subsys=watchers
+level=info msg="Cilium pod running for node; marking accordingly" nodeName=talos-node2 subsys=watchers
+level=info msg="Cilium pod running for node; marking accordingly" nodeName=talos-node4 subsys=watchers
+level=info msg="Cilium pod running for node; marking accordingly" nodeName=talos-node5 subsys=watchers
+level=info msg="Cilium pod scheduled but not running for node; setting taint" nodeName=talos-node1 subsys=watchers
+level=info msg="Cilium pod running for node; marking accordingly" nodeName=talos-node1 subsys=watchers
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Marking identity for later deletion" identity=19257 k8sUID=0963a2f9-cd1e-4ca9-b226-cff664fb800c subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=27592 k8sUID=f033ec8b-5d84-4413-8c0e-97703f3654c4 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=8954 k8sUID=4569792f-4d5b-49ce-bb7c-e101b8b235e1 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=14595 k8sUID=8a1100c7-139a-4b78-b3ea-05429fcda585 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=14955 k8sUID=7fc7c34f-d687-48b7-ab65-362008d35e53 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=10071 k8sUID=ee92a93b-c332-4f96-a4fa-8c4202e4693c subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=20422 k8sUID=49915139-b2bb-472c-9ece-c9b4dc9ec795 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=60956 k8sUID=d395eddb-556b-4688-8c0c-a23907eff2ef subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=51077 k8sUID=863a280d-62ce-49e0-8a2f-26213bc541d3 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=18424 k8sUID=7985ea1f-1c09-4464-a1f5-0ea5553efa69 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=43168 k8sUID=ce9eda6b-6510-4c7d-bcd7-f768fb5fd96e subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=14232 k8sUID=f0dd200c-219f-4de8-87ee-83257ea7aa53 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=23147 k8sUID=0caaff84-6cb9-4a1c-9148-a2168d788c88 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=2294 k8sUID=dc798a7a-575b-4662-86cd-cb5dd7928784 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=58811 k8sUID=e5749d9b-c7ed-4492-a650-272d3391aef4 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=3816 k8sUID=18fc24ca-1dcc-437d-a651-b5a7ac7ddc5c subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=41497 k8sUID=427aa597-38df-45ae-8180-1a156a8a0857 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=571 k8sUID=30581890-efbd-44bf-80d8-5299ab33f25b subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=57291 k8sUID=701d3008-1530-4114-8768-17d66f8db0e2 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=15192 k8sUID=68f748ae-9e5a-46a4-a7ac-7ef7acd08138 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=36797 k8sUID=5ed5ad4b-2320-47ab-88d2-7da13d0db930 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=9881 k8sUID=834f5f2f-45d2-4f1d-9d28-d688b31655c0 subsys=identity-heartbeat
+level=warning msg="Pool 'default-pool-2' conflicts since CIDR '192.168.169.0/24' overlaps CIDR '192.168.169.192/29' from IP Pool 'default-pool'" pool1-cidr=192.168.169.0/24 pool1-name=default-pool-2 pool2-cidr=default-pool pool2-name=192.168.169.192/29 subsys=lbipam
+level=error msg="pool delete failed" error="settleConflicts: unmarkPool: patchPoolStatus: ciliumloadbalancerippools.cilium.io \"default-pool-2\" not found" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Marking identity for later deletion" identity=2569 k8sUID=9d7569fb-1b72-4faa-b2ee-b088611c8cdc subsys=identity-heartbeat
+level=info msg="Restarting LB IPAM" subsys=lbipam
+level=info msg="LB-IPAM initializing" subsys=lbipam
+level=info msg="LB-IPAM done initializing" subsys=lbipam
+level=info msg="Marking identity for later deletion" identity=50925 k8sUID=3dfe12fe-a5c9-4cee-a5f6-a38c2d569dec subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=10831 k8sUID=2ee96d67-d25a-4b95-a6dd-27ddbc86fa8d subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=13728 k8sUID=232f4145-d255-49e8-8704-5dc094163476 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=24887 k8sUID=4b39e76d-8f81-422e-a9f1-20eff331e934 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=13196 k8sUID=f1d0a29a-feec-4976-8d0a-8fbf50c59665 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=5593 k8sUID=3d175e08-48dc-487a-98e4-4b5c06b45981 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=11536 k8sUID=53aa34ec-2f53-4748-a759-4a13f8576f6e subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=37832 k8sUID=5d3c28a1-0e7f-4258-9e8b-b2e7bfb578da subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=6661 k8sUID=63ab99c2-c3f1-4be9-9142-3cac36722506 subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=32934 k8sUID=d1e9ce62-7b25-4698-8cac-4bea9aab4aaf subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=20999 k8sUID=b637688e-5a6c-4a13-bffb-d01b4d4b40dd subsys=identity-heartbeat
+level=info msg="Marking identity for later deletion" identity=16524 k8sUID=ad3892ce-1f4b-40c7-81fd-dbb12f48e2ba subsys=identity-heartbeat

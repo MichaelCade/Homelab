@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-clean
+spec:
+  restartPolicy: Never
+  nodeName: talos-node5
+  volumes:
+  - name: rook-data-dir
+    emptyDir: {}
+  containers:
+  - name: disk-clean
+    image: busybox
+    volumeMounts:
+    - name: rook-data-dir
+      mountPath: /node/rook-data
+    command: ["/bin/sh", "-c", "rm -rf /node/rook-data/*"]

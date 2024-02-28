@@ -106,6 +106,7 @@ cluster:
                 exemptions:
                     namespaces:
                         - kube-system
+                        - rook-ceph
                     runtimeClasses: []
                     usernames: []
                 kind: PodSecurityConfiguration

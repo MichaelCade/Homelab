@@ -133,12 +133,12 @@ helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs --namespace kube-syste
 
 StorageClass 
 
-`kubectl apply -f sc-nfs.yml` 
+`kubectl apply -f nfs/sc-nfs.yml` 
 
 
 SnapshotClass 
 
-`kubectl apply -f snapshotclass-nfs.yaml`
+`kubectl apply -f nfs/snapshotclass-nfs.yaml`
 
 
 default storageclass 
@@ -147,18 +147,99 @@ default storageclass
 
 Test with PVC 
 
-`kubectl apply -f pvc-nfs.yml`
+`kubectl apply -f nfs/pvc-nfs.yml`
 
 ## Cilium 
 We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the kargo project dev container. 
 
 In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
 
-`kubectl apply -f cilium-ip-ipam.yaml`
+`kubectl apply -f cilium/cilium-ip-ipam.yaml `
 
 This allows me to use 192.168.169.190-199 as available addresses 
 
 ## Rook Ceph 
+
+I am using the helm chart here which can be added with `helm repo add rook-release https://charts.rook.io/release`
+
+Firstly, install the rook-ceph operator with the following command: 
+
+`helm install --create-namespace --namespace rook-ceph rook-ceph rook-release/rook-ceph`
+
+A useful command to determine your available disks would be to pick one of your nodes and run this command. 
+
+`talosctl disks --talosconfig talosconfig -n 192.168.169.211`
+
+I took the nvme from the output above and confirmed over all nodes in the cluster and then made changes to the relevant files listed below. I decided that this was a good first step vs creating a cluster then realising that we did not have empty disks. The following commands will clear the disks.
+
+The following string of commands are useful when wiping disks pre ceph cluster creation
+```
+kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node1.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph
+kubectl logs disk-wipe -n rook-ceph
+
+kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node2.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph
+kubectl logs disk-wipe -n rook-ceph
+
+kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node3.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph 
+kubectl logs disk-wipe -n rook-ceph
+
+kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node4.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph
+kubectl logs disk-wipe -n rook-ceph
+
+kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node5.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph
+kubectl logs disk-wipe -n rook-ceph
+```
+The following commands will delete the metadata. 
+
+```
+kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node1.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
+kubectl logs disk-clean -n rook-ceph
+
+kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node2.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
+kubectl logs disk-clean -n rook-ceph
+
+kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node3.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
+kubectl logs disk-clean -n rook-ceph
+
+kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node4.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
+kubectl logs disk-clean -n rook-ceph
+
+kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node5.yaml -n rook-ceph
+kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
+kubectl logs disk-clean -n rook-ceph
+```
+
+Once our disks are clean, we can then create our cluster using the following command 
+
+`helm install --create-namespace --namespace rook-ceph rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster`
+
+Once the above command is ran you should run this following command to confirm your cluster is successful, I found after a few attempts of this we had issues with PodSecurityPolicies so updated the talos controlplane configs to exclude PSP on the `rook-ceph` namespace. 
+
+`watch kubectl --namespace rook-ceph get cephcluster rook-ceph`
+
+
+Initial Authentication can be achieved with a port forward to the dashboard 
+
+`kubectl port-forward svc/rook-ceph-mgr-dashboard -n rook-ceph 8443:8443`
+
+Then to authenticate we need our default username `admin` and our password can be obtained with: 
+
+`kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo`
+
+
+
+
+
+
 
 ## Kasten K10 
 

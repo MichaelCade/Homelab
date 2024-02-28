@@ -4,7 +4,7 @@ This walkthrough is used in my home lab environment which consists of
 
 5 x Dell Optiplex 7060 
 i5-8500T (6 Cores, 6 threads) 
-16/32GB RAM 
+32GB RAM 
 256GB SSD 
 512GB m.2 nvme
 
@@ -12,20 +12,25 @@ Dell X1026 - 24 Port Switch
 
 ![](Picture2.jpg)
 
-There are some current upgrade plans 
-
-- Upgrade all nodes to 32GB RAM 
-
 ## Current State / Update 
 
 We have a 5 node (3 x Control Plane)(2 x Worker node) cluster running Talos Linux with configuration file in this folder. This Readme is so that I can remember how to start from scratch and help anyone else that stumbles across said readme to do the same in their homelab environment. 
 
-A 5 node cluster with the OS being installed on the SSD drives, the nvme drives will be used in a CEPH cluster later on down the line. 
+A 5 node cluster with the OS being installed on the SSD drives, the nvme drives will be used in a CEPH cluster. 
 
 I also have a shared NAS device which will be used by the cluster with the (CSI-Driver-NFS)[https://github.com/kubernetes-csi/csi-driver-nfs?tab=readme-ov-file] Details and process shared below.
 
-To Do list 
-- CEPH Cluster 
+To Do list (as of 28th Feb 2024)
+- Acquire Hardware [✔️]
+- Talos Configuration [✔️]
+- Cilium CNI [✔️] 
+- Cilium IPAM 
+- CEPH Cluster [✔️]
+- Kasten K10 
+- Kubevirt 
+- Cert-Manager 
+
+The above list and order may need to change but for now this is part of the learning curve, the overall goal is to leverage Kargo (Project Listed Below) for the automation of this. 
 
 ## Getting Started 
 
@@ -99,7 +104,7 @@ On the console of your nodes you will see some activity at this stage, it is imp
 
 
 ## Kubernetes Bootstrap 
-If everything is ready then we can instruct the bootstrap process, I am choosing one of my 3 nodes `talos-node1` 
+If everything is ready then we can instruct the bootstrap process, I am choosing one of my 5 nodes `talos-node1` 
  
 ```
 talosctl bootstrap \
@@ -150,7 +155,7 @@ Test with PVC
 `kubectl apply -f nfs/pvc-nfs.yml`
 
 ## Cilium 
-We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the kargo project dev container. 
+We have removed the default flannel CNI from our control plane and worker yaml configurations so we will need to install Cilium via a helm chart I achieved this through the (kargo project dev container)[https://github.com/ContainerCraft/Kargo]. 
 
 In my instance we would also like to create a range of IPs available on our network if a loadbalancer is required 
 
@@ -219,7 +224,6 @@ kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-ta
 kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
 kubectl logs disk-clean -n rook-ceph
 ```
-
 Once our disks are clean, we can then create our cluster using the following command 
 
 `helm install --create-namespace --namespace rook-ceph rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster`
@@ -236,12 +240,6 @@ Initial Authentication can be achieved with a port forward to the dashboard
 Then to authenticate we need our default username `admin` and our password can be obtained with: 
 
 `kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo`
-
-
-
-
-
-
 
 ## Kasten K10 
 

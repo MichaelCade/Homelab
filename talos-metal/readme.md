@@ -160,6 +160,8 @@ This allows me to use 192.168.169.190-199 as available addresses
 
 ## Rook Ceph 
 
+(Important Docs - Talos + Ceph)[https://www.talos.dev/v1.6/kubernetes-guides/configuration/ceph-with-rook/]
+
 I am using the helm chart here which can be added with `helm repo add rook-release https://charts.rook.io/release`
 
 Firstly, install the rook-ceph operator with the following command: 

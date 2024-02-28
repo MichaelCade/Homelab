@@ -23,8 +23,8 @@ I also have a shared NAS device which will be used by the cluster with the (CSI-
 To Do list (as of 28th Feb 2024)
 - Acquire Hardware [✔️]
 - Talos Configuration [✔️]
-- Cilium CNI [✔️] 
-- Cilium IPAM 
+- Cilium CNI [✔️]
+- Cilium IPAM [✔️]
 - CEPH Cluster [✔️]
 - Kasten K10 
 - Kubevirt 

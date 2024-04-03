@@ -138,7 +138,7 @@ bootstrap() {
 # We first need to obtain the IP addresses from the created cluster 
 echo "Bootstrapping the Cluster..."
 
-govc vm.ip ${CLUSTER_NAME}-control-plane-1
+
 
 
 }

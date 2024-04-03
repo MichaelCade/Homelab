@@ -22,17 +22,7 @@ terraform {
 }
 
 variable "vm_hostname_prefix" {
-  default = "example"
-}
-
-variable "vm_count" {
-  description = "number of VMs to create"
-  type = number
-  default = 1
-  validation {
-    condition = var.vm_count >= 1
-    error_message = "Must be 1 or more."
-  }
+  default = ""
 }
 
 variable "vm_cpu" {
@@ -105,28 +95,15 @@ variable "vsphere_datastore" {
 }
 
 variable "vsphere_folder" {
-  default = "example"
+  default = "vZilla DC"
 }
 
 variable "vsphere_windows_template" {
   default = "vagrant-templates/windows-2022-amd64-vsphere"
 }
 
-variable "winrm_username" {
-  default = "vagrant"
-}
-
-variable "winrm_password" {
-  # set the administrator password.
-  # NB the administrator password will be reset to this value by the cloudbase-init SetUserPasswordPlugin plugin.
-  # NB this value must meet the Windows password policy requirements.
-  #    see https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/password-must-meet-complexity-requirements
-  default = "HeyH0Password"
-  sensitive = true
-}
-
 variable "prefix" {
-  default = "terraform_windows_example"
+  default = "ONE"
 }
 
 provider "vsphere" {
@@ -160,42 +137,6 @@ data "vsphere_virtual_machine" "windows_template" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-# a multipart cloudbase-init cloud-config.
-# see https://github.com/cloudbase/cloudbase-init
-# see https://cloudbase-init.readthedocs.io/en/latest/userdata.html#userdata
-# see https://www.terraform.io/docs/providers/template/d/cloudinit_config.html
-# see https://www.terraform.io/docs/configuration/expressions.html#string-literals
-data "template_cloudinit_config" "example" {
-  count = var.vm_count
-  part {
-    content_type = "text/cloud-config"
-    content = <<-EOF
-      #cloud-config
-      hostname: ${var.vm_hostname_prefix}${count.index}
-      timezone: Asia/Tbilisi
-      EOF
-  }
-  part {
-    filename = "example.ps1"
-    content_type = "text/x-shellscript"
-    content = <<-EOF
-      #ps1_sysnative
-      Start-Transcript -Append "C:\cloudinit-config-example.ps1.log"
-      function Write-Title($title) {
-        Write-Output "`n#`n# $title`n#"
-      }
-      Write-Title "whoami"
-      whoami /all
-      Write-Title "Windows version"
-      cmd /c ver
-      Write-Title "Environment Variables"
-      dir env:
-      Write-Title "TimeZone"
-      Get-TimeZone
-      EOF
-  }
-}
-
 # see https://registry.terraform.io/providers/hashicorp/vsphere/latest/docs/resources/folder
 resource "vsphere_folder" "folder" {
   path = var.vsphere_folder
@@ -205,9 +146,8 @@ resource "vsphere_folder" "folder" {
 
 # see https://registry.terraform.io/providers/hashicorp/vsphere/latest/docs/resources/virtual_machine
 resource "vsphere_virtual_machine" "example" {
-  count = var.vm_count
   folder = vsphere_folder.folder.path
-  name = "${var.prefix}${count.index}"
+  name = "${var.prefix}"
   guest_id = data.vsphere_virtual_machine.windows_template.guest_id
   firmware = data.vsphere_virtual_machine.windows_template.firmware
   num_cpus = var.vm_cpu
@@ -240,36 +180,7 @@ resource "vsphere_virtual_machine" "example" {
   clone {
     template_uuid = data.vsphere_virtual_machine.windows_template.id
   }
-  # NB this extra_config data ends-up inside the VM .vmx file and will be
-  #    exposed by cloudbase-init as a cloud-init datasource.
-  extra_config = {
-    "guestinfo.metadata" = base64gzip(jsonencode({
-      "admin-username": var.winrm_username,
-      "admin-password": var.winrm_password,
-      "public-keys-data": trimspace(file("~/.ssh/id_rsa.pub")),
-    })),
-    "guestinfo.metadata.encoding" = "gzip+base64",
-    "guestinfo.userdata" = data.template_cloudinit_config.example[count.index].rendered,
-    "guestinfo.userdata.encoding" = "gzip+base64"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      <<-EOF
-      whoami /all
-      ver
-      PowerShell "Get-Disk | Select-Object Number,PartitionStyle,Size | Sort-Object Number"
-      PowerShell "Get-Volume | Sort-Object DriveLetter,FriendlyName"
-      EOF
-    ]
-    connection {
-      type = "winrm"
-      user = var.winrm_username
-      password = var.winrm_password
-      host = self.default_ip_address
-      timeout = "1h"
-    }
-  }
-}
+}  
 
 output "ips" {
   value = vsphere_virtual_machine.example.*.default_ip_address

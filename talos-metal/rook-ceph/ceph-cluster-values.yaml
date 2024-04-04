@@ -413,7 +413,6 @@ cephClusterSpec:
 ingress:
   # -- Enable an ingress for the ceph-dashboard
   dashboard:
-    {}
     # annotations:
     #   external-dns.alpha.kubernetes.io/hostname: dashboard.example.com
     #   nginx.ingress.kubernetes.io/rewrite-target: /ceph-dashboard/$2

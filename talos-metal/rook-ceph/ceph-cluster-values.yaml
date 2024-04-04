@@ -144,7 +144,7 @@ cephClusterSpec:
     # port: 8443
     # Serve the dashboard using SSL (if using ingress to expose the dashboard and `ssl: true` you need to set
     # the corresponding "backend protocol" annotation(s) for your ingress controller of choice)
-    ssl: true
+    ssl: false
 
   # Network configuration, see: https://github.com/rook/rook/blob/master/Documentation/CRDs/ceph-cluster-crd.md#network-configuration-settings
   network:
@@ -430,7 +430,7 @@ ingress:
     #   secretName: testsecret-tls
     ## Note: Only one of ingress class annotation or the `ingressClassName:` can be used at a time
     ## to set the ingress class
-    # ingressClassName: nginx
+   ingressClassName: cilium
 
 # -- A list of CephBlockPool configurations to deploy
 # @default -- See [below](#ceph-block-pools)

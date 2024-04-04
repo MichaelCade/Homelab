@@ -7,7 +7,7 @@ cluster:
 devices: br0
 externalIPs:
   enabled: true
-ingress-Controller:
+ingressController:
   default: true
   enabled: true
   loadbalancerMode: shared

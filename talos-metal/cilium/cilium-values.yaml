@@ -7,10 +7,9 @@ cluster:
 devices: br0
 externalIPs:
   enabled: true
-ingress-Controller:
-  enabled: true
 ingressController:
   default: true
+  enabled: true
   loadbalancerMode: shared
 ipam:
   mode: kubernetes

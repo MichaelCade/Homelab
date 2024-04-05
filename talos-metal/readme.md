@@ -256,11 +256,30 @@ If you have done both NFS and Ceph then it is likely that you now have two defau
 
 `kubectl patch storageclass nfs-csi  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'`
 
+Note that I after also playing with Cilium Ingress we created a manual ingress for the dashboard, would need to test more from scratch on if this is needed or not if this can be enabled through helm values. 
+
+`kubectl apply -f rook-ceph/ceph-ingress.yaml` 
+
 ## Kasten K10 
 
 ## Kubevirt 
 
 ## Cert-Manager 
+
+Work in Progress 
+
+`helm repo add jetstack https://charts.jetstack.io --force-update`
+
+`helm repo update`
+
+```
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.14.4 \
+  --set installCRDs=true
+```
 
 
 ## Reset 

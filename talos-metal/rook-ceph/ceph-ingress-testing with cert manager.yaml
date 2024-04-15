@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-ionos-staging
+  name: rook-ceph-mgr-dashboard-test
+  namespace: rook-ceph
+spec:
+  ingressClassName: cilium
+  rules:
+  - host: '*.upthestack.io'
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rook-ceph-mgr-dashboard
+            port:
+              number: 8443
+  tls:
+    - hosts:
+        - '*.upthestack.io'
+      secretName: example-ionos-tls-prod

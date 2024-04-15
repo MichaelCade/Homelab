@@ -188,7 +188,7 @@ I took the nvme from the output above and confirmed over all nodes in the cluste
 
 The following string of commands are useful when wiping disks pre ceph cluster creation
 ```
-kubectl delete pod disk-wipe -n rook-ceph && kubectl apply -f rook-ceph/disk-talos-node1.yaml -n rook-ceph
+kubectl apply -f rook-ceph/disk-talos-node1.yaml -n rook-ceph
 kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe -n rook-ceph
 kubectl logs disk-wipe -n rook-ceph
 
@@ -211,7 +211,7 @@ kubectl logs disk-wipe -n rook-ceph
 The following commands will delete the metadata. 
 
 ```
-kubectl delete pod disk-clean -n rook-ceph && kubectl apply -f rook-ceph/meta-talos-node1.yaml -n rook-ceph
+kubectl apply -f rook-ceph/meta-talos-node1.yaml -n rook-ceph
 kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-clean -n rook-ceph
 kubectl logs disk-clean -n rook-ceph
 
@@ -233,7 +233,7 @@ kubectl logs disk-clean -n rook-ceph
 ```
 Once our disks are clean, we can then create our cluster using the following command 
 
-`helm install --create-namespace --namespace rook-ceph rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster`
+` helm install --create-namespace --namespace rook-ceph rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster -f rook-ceph/ceph-cluster-values.yaml `
 
 Once the above command is ran you should run this following command to confirm your cluster is successful, I found after a few attempts of this we had issues with PodSecurityPolicies so updated the talos controlplane configs to exclude PSP on the `rook-ceph` namespace. 
 

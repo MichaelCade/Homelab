@@ -365,5 +365,17 @@ talosctl apply-config \
     --nodes 192.168.169.100 \
     --endpoints 192.168.169.100 \
     --file talos-node5-worker.yaml \
-    --insecure 
+    --insecure
+```
+
+## Shutdown
+
+```
+talosctl shutdown --nodes 192.168.169.211 --endpoints 192.168.169.211 --talosconfig talosconfig
+talosctl shutdown --nodes 192.168.169.212 --endpoints 192.168.169.212 --talosconfig talosconfig
+talosctl shutdown --nodes 192.168.169.213 --endpoints 192.168.169.213 --talosconfig talosconfig
+talosctl shutdown --nodes 192.168.169.214--endpoints 192.168.169.214 --talosconfig talosconfig
+talosctl shutdown --nodes 192.168.169.215 --endpoints 192.168.169.215 --talosconfig talosconfig
+```
+
 ```

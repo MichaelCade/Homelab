@@ -13,8 +13,8 @@ export GOVC_DATASTORE='NETGEAR716'
 export CLUSTER_NAME='vZilla-Cluster'
 
 # If a cluster name is not defined then it will be vmware-test, I hard coded the cluster name for ease.
-CLUSTER_NAME=${CLUSTER_NAME:=vmware-test}
-TALOS_VERSION=v1.6.4
+CLUSTER_NAME=${CLUSTER_NAME:=talos-vsphere}
+TALOS_VERSION=v1.7.6
 OVA_PATH=${OVA_PATH:="https://github.com/siderolabs/talos/releases/download/${TALOS_VERSION}/vmware-amd64.ova"}
 
 CONTROL_PLANE_COUNT=${CONTROL_PLANE_COUNT:=3}

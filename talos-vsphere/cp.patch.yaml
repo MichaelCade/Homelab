@@ -6,7 +6,3 @@
       dhcp: true
       vip:
         ip: 192.168.169.202
-- op: replace
-  path: /cluster/extraManifests
-  value:
-    - "https://raw.githubusercontent.com/mologie/talos-vmtoolsd/master/deploy/unstable.yaml"

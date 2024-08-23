@@ -1,0 +1,216 @@
+# Veeam Kasten for Kubernetes backup via Ansible's Helm module.
+#
+# Run the playbook:
+#
+#     ansible-playbook ansible-kasten.yaml
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Create Kasten-io namespace.
+      kubernetes.core.k8s:
+        name: kasten-io
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Add Veeam Kasten for Kubernetes chart repository.
+      kubernetes.core.helm_repository:
+        name: k10
+        repo_url: "https://charts.kasten.io/"
+
+    - name: Deploy Veeam Kasten for Kubernetes Helm chart.
+      kubernetes.core.helm:
+        name: k10
+        chart_ref: kasten/k10
+        # chart_version: 'latest'
+        release_namespace: kasten-io
+        state: present
+        # The values shown below are related to Helm chart values. These can be found at:
+        # https://docs.kasten.io/latest/install/advanced.html#complete-list-of-k10-helm-options
+        values:
+          auth.tokenAuth.enabled: true
+        #  externalGateway.create: false
+      tags:
+        - deploy
+
+    - name: Wait for Veeam Kasten for Kubernetes to be deployed
+      wait_for_connection:
+        delay: 10
+        timeout: 300
+
+    - name: Wait for all pods to be ready
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Pod
+        namespace: kasten-io
+      register: pod_info
+      until: pod_info.resources | selectattr('status.phase', 'equalto', 'Running') | list | length == pod_info.resources | length
+      retries: 20
+      delay: 60
+
+    - name: Watch kubectl get pods in kasten-io namespace
+      shell: kubectl get pods -n kasten-io
+      register: watch_output
+
+    - name: Print the watch output
+      debug:
+        var: watch_output.stdout_lines
+
+    - name: Create Gold Tier Backup Policy.
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: config.kio.kasten.io/v1alpha1
+          kind: Policy
+          metadata:
+            name: 01-gold-tier
+            namespace: kasten-io
+          spec:
+            frequency: "@hourly"
+            retention:
+              hourly: 24
+              daily: 7
+              weekly: 4
+              monthly: 12
+              yearly: 7
+            selector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - gold
+            actions:
+              - action: backup
+            createdBy: k10-admin
+
+    - name: Create Silver Tier Backup Policy.
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: config.kio.kasten.io/v1alpha1
+          kind: Policy
+          metadata:
+            name: 02-silver-tier
+            namespace: kasten-io
+          spec:
+            frequency: "@daily"
+            retention:
+              daily: 7
+              weekly: 4
+              monthly: 12
+              yearly: 7
+            selector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - silver
+            actions:
+              - action: backup
+            createdBy: k10-admin
+
+    - name: Create Bronze Tier Backup Policy.
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: config.kio.kasten.io/v1alpha1
+          kind: Policy
+          metadata:
+            name: 03-bronze-tier
+            namespace: kasten-io
+          spec:
+            frequency: "@weekly"
+            retention:
+              weekly: 4
+              monthly: 12
+              yearly: 7
+            selector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - bronze
+            actions:
+              - action: backup
+            createdBy: k10-admin
+
+    - name: Create Tin Tier Backup Policy.
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: config.kio.kasten.io/v1alpha1
+          kind: Policy
+          metadata:
+            name: 04-tin-tier
+            namespace: kasten-io
+          spec:
+            frequency: "@monthly"
+            retention:
+              monthly: 12
+              yearly: 7
+            selector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - tin
+            actions:
+              - action: backup
+            createdBy: k10-admin
+
+    - name: Create Paper Tier Backup Policy.
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: config.kio.kasten.io/v1alpha1
+          kind: Policy
+          metadata:
+            name: 05-paper-tier
+            namespace: kasten-io
+          spec:
+            frequency: "@onDemand"
+            selector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - paper
+            actions:
+              - action: backup
+            createdBy: k10-admin
+
+#    - name: Run Veeam Kasten Backup Policy.
+#      kubernetes.core.k8s:
+#        state: present
+#        definition:
+#          apiVersion: actions.kio.kasten.io/v1alpha1
+#          kind: BackupAction
+#          metadata:
+#            generateName: backup-mysql-
+#            namespace: mysql
+#            labels:
+#              k10.kasten.io/appName: "mysql"
+#              k10.kasten.io/appNamespace: "mysql"
+#          spec:
+#            subject:
+#              name: mysql
+#              namespace: mysql
+#      tags:
+#        - policy
+
+#    - name: Get Veeam Kasten Gateway address.
+#      kubernetes.core.k8s_info:
+#        api_version: v1
+#        name: gateway-ext
+#        kind: Service
+#        namespace: kasten-io
+#      register: service
+
+#    - name: Print Veeam Kasten Gateway address.
+#      debug:
+#        msg: "Veeam Kasten Gateway address: {{ service.resources[0].status.loadBalancer.ingress[0] }}"
+#      tags:
+#        - deploy

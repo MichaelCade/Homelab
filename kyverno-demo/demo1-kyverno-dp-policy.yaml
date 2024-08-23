@@ -1,0 +1,21 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+ name: enforce-deployment-label
+spec:
+ validationFailureAction: Enforce
+ rules:
+ - name: production-apps-enforcement
+   match:
+     resources:
+       kinds:
+       - Deployment
+       selector:
+         matchLabels:
+           purpose: production
+   validate:
+     message: "Production Deployments must have Gold Tier Data Protection Policies Enabled (use labels: dataprotection: k10-<policy-preset-name>"
+     pattern:
+       metadata:
+         labels:
+           dataprotection: gold

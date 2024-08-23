@@ -1,0 +1,39 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+ name: kasten-catch-all
+spec:
+  background: true
+  rules:
+  - name: generate-policy
+    match:
+      any:
+      - resources:
+          kinds:
+            - Deployment
+          selector:
+            matchLabels:
+              purpose: production
+              dataprotection: yes
+    generate:
+      apiVersion: config.kio.kasten.io/v1alpha1
+      kind: Policy
+      name: kasten-{{request.namespace}}-catchall-policy
+      namespace: kasten-io
+      data:
+        metadata:
+          name: kasten-{{request.namespace}}-catchall-policy
+          namespace: kasten-io
+        spec:
+          comment: Veeam Kasten "catchall" production backup policy
+          presetRef:
+            name: catchall-policy-preset
+            namespace: kasten-io
+          actions:
+          - action: backup
+          selector:
+            matchExpressions:
+            - key: k10.kasten.io/appNamespace
+              operator: In
+              values:
+              - "{{request.namespace}}"

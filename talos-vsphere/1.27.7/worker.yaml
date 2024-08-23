@@ -4,10 +4,10 @@ persist: true
 # Provides machine specific configuration options.
 machine:
     type: worker # Defines the role of the machine within the cluster.
-    token: h610h4.rdmia8m497fomhm6 # The `token` is used by a machine to join the PKI of the cluster.
+    token: 2dmw7k.popfrb9tydjte8lr # The `token` is used by a machine to join the PKI of the cluster.
     # The root certificate authority of the PKI.
     ca:
-        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQekNCOHFBREFnRUNBaEVBNkVrc3MyNXc3OFhPYmpESThEK0F2REFGQmdNclpYQXdFREVPTUF3R0ExVUUKQ2hNRmRHRnNiM013SGhjTk1qUXdPREl3TVRZeU1UUXdXaGNOTXpRd09ERTRNVFl5TVRRd1dqQVFNUTR3REFZRApWUVFLRXdWMFlXeHZjekFxTUFVR0F5dGxjQU1oQUJrV2p0ZmttTUszRXc4TjB1QjhXelRSVWkwNlJ1c2w0NnViCmVDbG5nNGJKbzJFd1h6QU9CZ05WSFE4QkFmOEVCQU1DQW9Rd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUcKQ0NzR0FRVUZCd01DTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRkc0QzBkVGg4clc2WHBKWAo4cGJGTWtpU3JSN0NNQVVHQXl0bGNBTkJBR1JlVEtUME9BbUF4NXZVSzVmelpmeDVxL0RTTnpLYU94VmVIYXpDCjlCaTNoTEFGVS81VGc2SHJOeldYZENPQnQ1SGlKWWJDOXBpVG1RSm0rc0pob1FBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQakNCOGFBREFnRUNBaEF6b0V1RVRYRk5IOVRNcU1nT25XTVdNQVVHQXl0bGNEQVFNUTR3REFZRFZRUUsKRXdWMFlXeHZjekFlRncweU5EQXhNVEV4TmpNM016SmFGdzB6TkRBeE1EZ3hOak0zTXpKYU1CQXhEakFNQmdOVgpCQW9UQlhSaGJHOXpNQ293QlFZREsyVndBeUVBVU5sT3g2ZUpmd0UxWTRxbmV4eWdnNDJueWpSeFk1NDY4azBzCnJqTm90T0tqWVRCZk1BNEdBMVVkRHdFQi93UUVBd0lDaERBZEJnTlZIU1VFRmpBVUJnZ3JCZ0VGQlFjREFRWUkKS3dZQkJRVUhBd0l3RHdZRFZSMFRBUUgvQkFVd0F3RUIvekFkQmdOVkhRNEVGZ1FVdlFHaWJRQmhqOUViQXk3WgpRU3cvOCtMb1lUUXdCUVlESzJWd0EwRUFyNmRVRHIwdXl2anRQdk1kRHlKN2w2bk41UzRVZmRXZW4vcFVJWHFmClZnZ0dZV2JIUm1ROWlqWHZBOTZkQlVsc3UwU2FBWGduOWR1bEtIT1lpL3U5RFE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
         key: ""
     # Extra certificate subject alternative names for the machine's certificate.
     certSANs: []
@@ -18,7 +18,7 @@ machine:
 
     # Used to provide additional options to the kubelet.
     kubelet:
-        image: ghcr.io/siderolabs/kubelet:v1.29.1 # The `image` field is an optional reference to an alternative kubelet image.
+        image: ghcr.io/siderolabs/kubelet:v1.27.7 # The `image` field is an optional reference to an alternative kubelet image.
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
         
@@ -180,7 +180,7 @@ machine:
     # Used to provide instructions for installations.
     install:
         disk: /dev/sda # The disk used for installations.
-        image: ghcr.io/siderolabs/installer:v1.6.3 # Allows for supplying the image used to perform the installation.
+        image: ghcr.io/siderolabs/installer:v1.6.1 # Allows for supplying the image used to perform the installation.
         wipe: false # Indicates if the installation disk should be wiped at installation time.
         
         # # Look up disk using disk attributes like model, size, serial and others.
@@ -396,8 +396,8 @@ machine:
     #     exampleTaint: exampleTaintValue:NoSchedule
 # Provides cluster specific configuration options.
 cluster:
-    id: ejwTX9mdl8_mhUDFKHyPicdBGtGRAH_dRsEGbSIdIOs= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
-    secret: K680WOXzEzaLth55W+lv7goRnaumnAolchgzdLM1YLg= # Shared secret of cluster (base64 encoded random 32 bytes).
+    id: 0oU-6z7vB7M9ZEYuw9O_Eyo7oTw0s39Oe8a_C16fd1E= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
+    secret: 4rkvVTKv5kNq/chcTKf2/YVALArlfItPzQUD/NikKMQ= # Shared secret of cluster (base64 encoded random 32 bytes).
     # Provides control plane specific configuration options.
     controlPlane:
         endpoint: https://192.168.169.202:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
@@ -417,10 +417,10 @@ cluster:
         #     # URLs containing manifests to apply for the CNI.
         #     urls:
         #         - https://docs.projectcalico.org/archive/v3.20/manifests/canal.yaml
-    token: fdfc4d.nqukbvw3se91q8nk # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
+    token: hg5dmr.08wpiuyptz5g3ffv # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
     # The base64 encoded root certificate authority used by Kubernetes.
     ca:
-        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpakNDQVMrZ0F3SUJBZ0lRSURqR3ozd1phYWJzTVNxa1dlZDhpREFLQmdncWhrak9QUVFEQWpBVk1STXcKRVFZRFZRUUtFd3ByZFdKbGNtNWxkR1Z6TUI0WERUSTBNRGd5TURFMk1qRTBNRm9YRFRNME1EZ3hPREUyTWpFMApNRm93RlRFVE1CRUdBMVVFQ2hNS2EzVmlaWEp1WlhSbGN6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VICkEwSUFCQnlnYTJuQ2k1dUt2cHh4SVZSb0ZtSjFSbkJEUU4rRXlMK2xkUzd4YjdxKzF2QXUwUWZHTi9kckl3M0UKN2Ixc2ptSVNpVFl6MU95cEpoOEJBZnJTbzJtallUQmZNQTRHQTFVZER3RUIvd1FFQXdJQ2hEQWRCZ05WSFNVRQpGakFVQmdnckJnRUZCUWNEQVFZSUt3WUJCUVVIQXdJd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFCkZnUVV3ZXpXaGU5eW5uYi9xOTlZRVFnc29ocFFMUUF3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQVBMZFZqemgKYzl0SWI0eXFBUUxTK1o3dFhId1RFOGlSNU1Gb3NZWDRBNWtqQWlFQXVvaU5HNG5DNDlLZDJFVzJmWFZHeDBWZgpUM2dZUHViUDJEY25GR0xlRFh3PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpVENDQVMrZ0F3SUJBZ0lRWFRaU3RYM004azc0bDZxVnNFQ3BLekFLQmdncWhrak9QUVFEQWpBVk1STXcKRVFZRFZRUUtFd3ByZFdKbGNtNWxkR1Z6TUI0WERUSTBNREV4TVRFMk16Y3pNbG9YRFRNME1ERXdPREUyTXpjegpNbG93RlRFVE1CRUdBMVVFQ2hNS2EzVmlaWEp1WlhSbGN6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VICkEwSUFCTytDZk4yaDR4R3U3b0VVTHFuSjhTRElUUVVuVHJaaVROMFFZQTRQV0k1cjN4OURDb2RQckhjcHZwWm4KSDlkR0twZEdpR0tlaWxoVEN0bEhPMGJVWHVTallUQmZNQTRHQTFVZER3RUIvd1FFQXdJQ2hEQWRCZ05WSFNVRQpGakFVQmdnckJnRUZCUWNEQVFZSUt3WUJCUVVIQXdJd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFCkZnUVV5NnRTOVVYRGo0Q3Jhd0FPWmxBcFNrekhiU0V3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUloQU1jN2ZLQWoKN2M4YjVFdldOSmt2RkpHNlVUY1lGOWt4SWR1eFJXc1BvOXcrQWlCa2w3VHppQUh5emtSVTR6V1hYZzBtbDJIWQplVDdqTm5kaTBiMWlEdFI3S0E9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
         key: ""
     # Configures cluster member discovery.
     discovery:
@@ -460,7 +460,7 @@ cluster:
 
     # # API server specific configuration options.
     # apiServer:
-    #     image: registry.k8s.io/kube-apiserver:v1.29.1 # The container image used in the API server manifest.
+    #     image: registry.k8s.io/kube-apiserver:v1.29.0 # The container image used in the API server manifest.
     #     # Extra arguments to supply to the API server.
     #     extraArgs:
     #         feature-gates: ServerSideApply=true
@@ -497,7 +497,7 @@ cluster:
 
     # # Controller manager server specific configuration options.
     # controllerManager:
-    #     image: registry.k8s.io/kube-controller-manager:v1.29.1 # The container image used in the controller manager manifest.
+    #     image: registry.k8s.io/kube-controller-manager:v1.29.0 # The container image used in the controller manager manifest.
     #     # Extra arguments to supply to the controller manager.
     #     extraArgs:
     #         feature-gates: ServerSideApply=true
@@ -505,7 +505,7 @@ cluster:
     # # Kube-proxy server-specific configuration options
     # proxy:
     #     disabled: false # Disable kube-proxy deployment on cluster bootstrap.
-    #     image: registry.k8s.io/kube-proxy:v1.29.1 # The container image used in the kube-proxy manifest.
+    #     image: registry.k8s.io/kube-proxy:v1.29.0 # The container image used in the kube-proxy manifest.
     #     mode: ipvs # proxy mode of kube-proxy.
     #     # Extra arguments to supply to kube-proxy.
     #     extraArgs:
@@ -513,14 +513,14 @@ cluster:
 
     # # Scheduler server specific configuration options.
     # scheduler:
-    #     image: registry.k8s.io/kube-scheduler:v1.29.1 # The container image used in the scheduler manifest.
+    #     image: registry.k8s.io/kube-scheduler:v1.29.0 # The container image used in the scheduler manifest.
     #     # Extra arguments to supply to the scheduler.
     #     extraArgs:
     #         feature-gates: AllBeta=true
 
     # # Etcd specific configuration options.
     # etcd:
-    #     image: gcr.io/etcd-development/etcd:v3.5.11-arm64 # The container image used to create the etcd service.
+    #     image: gcr.io/etcd-development/etcd:v3.5.11 # The container image used to create the etcd service.
     #     # The `ca` is the root certificate authority of the PKI.
     #     ca:
     #         crt: LS0tIEVYQU1QTEUgQ0VSVElGSUNBVEUgLS0t
